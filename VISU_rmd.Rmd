@@ -1,0 +1,50 @@
+---
+title: "VISU2022_rmd"
+author: "Sayantan Mondal MDS202231"
+output: html_document
+date: "2022-11-02"
+---
+
+
+```{r}
+library(ggplot2)
+
+
+```
+
+
+
+```{r}
+df <- read.csv(file.choose())
+```
+
+
+1.
+```{r}
+ggplot(df) + geom_point(aes(Dalc, absences, color = internet)) + facet_grid(.~sex) + xlab("Alcohol Consumption") + ylab("Absences") + scale_color_discrete("Internet User")
+```
+
+2.
+```{r}
+ggplot(df[order(df$studytime),]) + geom_bar(aes(Dalc, fill = Pstatus)) + facet_wrap(studytime~., nrow = 2) + xlab("Daily Alchohol Consumption") + ylab("Number of Students") + scale_fill_discrete("Parents Status", labels = c("Apart","Together")) + ggtitle(("Daily Alchohol Consumption with respect to Number of Hours they are studying"))
+```
+
+3.
+```{r}
+ggplot(df) + geom_point(aes(absences, G3, color = famrel)) + facet_wrap(goout~romantic) # + scale_color_discrete("Quality Time Spent with Family(units)")
+```
+
+4.
+```{r}
+Fedu <- df$Fedu
+df2 <- data.frame(table(Fedu))
+ggplot(df2, aes(x = "", y = Freq, fill = Fedu)) + coord_polar("y",start = 0) + geom_bar(stat = "identity", width = 1) + scale_fill_brewer(palette = "Set1")
+```
+
+5.
+```{r}
+df$TC <- df$Dalc + df$Walc
+ggplot(df, aes( TC)) + geom_bar(aes(fill = Fjob)) + facet_wrap(.~health)
+```
+
+
